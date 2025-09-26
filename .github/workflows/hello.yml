@@ -1,1 +1,28 @@
+name: Hello World
 
+on:
+  workflow_dispatch:
+    inputs:
+      server:
+        description: "Target server hostname or IP"
+        required: true
+      user:
+        description: "SSH username"
+        required: true
+
+jobs:
+  hello: 
+    runs-on: self-hosted
+    steps:
+      - name: print message
+        run: |
+          echo "Hello ${{ vars.NAME }}"
+          echo "My Repository name is  ${{ github.repository }}"
+      - name: print message 2
+        run: |
+          echo "Your Designation is ${{ vars.DESIG }}"
+          echo "My Repository name is  ${{ github.workflow }}"
+      - name: print message like step 3
+        run: |
+          echo "Your are going to join at ${{ vars.COMPANY }}"
+#          echo "My Secreate value is  ${{ secrets.MY_KEY }}"
