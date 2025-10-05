@@ -1,0 +1,28 @@
+name: Configuration & Installing Xampp
+on:
+  workflow_dispatch: 
+    inputs:
+      server:
+        description: "Target Server IP/Hostname"
+        required: true
+      user:
+        description: "Target Server User name"
+        required: true
+jobs:
+  XAMPP_CONFIGURATION:
+    runs-on: self-hosted 
+    steps:
+      - name: xampp configuratiom
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ github.event.inputs.server }}
+          username: ${{ github.event.inputs.user }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "Downloading and installing XAMPP ... "
+            wget https://sourceforge.net/projects/xampp/files/XAMPP%20Linux/8.2.12/xampp-linux-x64-8.2.12-0-installer.run -O /tmp/xampp-installer.run
+            chmod +x /tmp/xampp-installer.run
+            sudo /tmp/xampp-installer.run -- mode unattended
+            echo "XAMPP installed successfully."
+            
+      
